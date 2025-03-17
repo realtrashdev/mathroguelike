@@ -287,9 +287,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f0097a512052754f8bba4a8c8e32d2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followMouse: 1
+  followMouse: 0
   forceHz: 25
-  forceVt: 100
+  forceVt: 250
+  rotationMultiplier: 3
 --- !u!50 &2096825693
 Rigidbody2D:
   serializedVersion: 5

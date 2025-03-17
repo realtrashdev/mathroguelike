@@ -6,9 +6,10 @@ public class Number : MonoBehaviour
 
     [SerializeField] bool followMouse;
 
-    [Header("Settings")]
+    [Header("Movement")]
     [SerializeField] int forceHz;
     [SerializeField] int forceVt;
+    [SerializeField] float rotationMultiplier;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -41,7 +42,7 @@ public class Number : MonoBehaviour
 
     void Rotate()
     {
-        float rotAmount = rb.linearVelocity.x;
+        float rotAmount = rb.linearVelocity.x * rotationMultiplier;
 
         transform.eulerAngles = new Vector3(0, 0, rotAmount);
     }
