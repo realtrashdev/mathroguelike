@@ -12,7 +12,6 @@ public class Number : MonoBehaviour
     [SerializeField] float followSpeed;
     [SerializeField] float maxRotation = 0;
     [SerializeField] float rotationSmoothing;
-    [SerializeField] float rotationMultiplier;
 
     void Awake()
     {
@@ -42,6 +41,7 @@ public class Number : MonoBehaviour
         followMouse = grab;
 
         rb.gravityScale = grab ? 0 : 0.5f;
+        rb.linearVelocityY = 0;
     }
 
     void Rotate()
