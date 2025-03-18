@@ -14,7 +14,6 @@ public class Number : MonoBehaviour
     [SerializeField] float rotationSmoothing;
     [SerializeField] float rotationMultiplier;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -31,20 +30,24 @@ public class Number : MonoBehaviour
         rb.gravityScale = !followMouse ? 0.5f : 0;
     }
 
-    // Update is called once per frame
     void Update()
     {
         Rotate();
         if (followMouse) { transform.position = Vector2.MoveTowards(transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition), followSpeed); }
     }
 
-    public void Grabbed()
+    public void GrabChange(bool grab)
     {
-        followMouse = true;
+        Debug.Log("Grab Change");
+        followMouse = grab;
+
+        rb.gravityScale = grab ? 0 : 0.5f;
     }
 
     void Rotate()
     {
+        if (!followMouse) return;
+
         float rotAmount = 0;
 
         if (transform.position.x + 0.05f < Camera.main.ScreenToWorldPoint(Input.mousePosition).x)
@@ -57,8 +60,18 @@ public class Number : MonoBehaviour
             rotAmount = -maxRotation;
         }
 
-        float rotate = Mathf.Lerp(transform.eulerAngles.z, rotAmount, rotationSmoothing * Time.deltaTime);
+        float rotate = Mathf.LerpAngle(transform.eulerAngles.z, rotAmount, rotationSmoothing * Time.deltaTime);
         transform.eulerAngles = new Vector3(0, 0, rotate);
         //transform.localEulerAngles = Vector3.Lerp(transform.localEulerAngles, new Vector3(0, 0, -20), rotationSmoothing * Time.deltaTime);
+    }
+
+    private void OnMouseDown()
+    {
+        GrabChange(true);
+    }
+
+    private void OnMouseUp()
+    {
+        GrabChange(false);
     }
 }
