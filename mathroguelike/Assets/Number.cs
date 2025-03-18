@@ -7,7 +7,7 @@ public class Number : MonoBehaviour
     Rigidbody2D rb;
     TrailRenderer trail;
 
-    [SerializeField] int value;
+    public int value;
 
     [Header("Rendering")]
     [SerializeField] Sprite[] numbers;
@@ -50,7 +50,14 @@ public class Number : MonoBehaviour
     void Update()
     {
         Rotate();
-        if (followMouse) { transform.position = Vector2.MoveTowards(transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition), followSpeed); }
+
+        if (followMouse)
+        { 
+            transform.position = Vector2.MoveTowards(transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition), followSpeed);
+        }
+
+        //if off screen, disable
+        if (transform.position.y < -10) { gameObject.SetActive(false); }
     }
 
     public void GrabChange(bool grab)
