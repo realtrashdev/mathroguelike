@@ -57,6 +57,8 @@ public class Number : MonoBehaviour
             rotAmount = -maxRotation;
         }
 
-        transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, 0, rotAmount), rotationSmoothing * Time.deltaTime);
+        float rotate = Mathf.Lerp(transform.eulerAngles.z, rotAmount, rotationSmoothing * Time.deltaTime);
+        transform.eulerAngles = new Vector3(0, 0, rotate);
+        //transform.localEulerAngles = Vector3.Lerp(transform.localEulerAngles, new Vector3(0, 0, -20), rotationSmoothing * Time.deltaTime);
     }
 }
