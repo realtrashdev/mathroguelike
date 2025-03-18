@@ -1,12 +1,19 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Number : MonoBehaviour
 {
+    SpriteRenderer render;
     Rigidbody2D rb;
+    TrailRenderer trail;
 
-    [SerializeField] bool followMouse;
+    [SerializeField] int value;
+
+    [Header("Rendering")]
+    [SerializeField] Sprite[] numbers;
 
     [Header("Movement")]
+    [SerializeField] bool followMouse;
     [SerializeField] int forceHz;
     [SerializeField] int forceVt;
     [SerializeField] float followSpeed;
@@ -15,18 +22,29 @@ public class Number : MonoBehaviour
 
     void Awake()
     {
+        render = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
+        trail = GetComponent<TrailRenderer>();
         gameObject.SetActive(false);
     }
 
     void OnEnable()
     {
+        GrabChange(false);
+
+        //if 0, disable
+        if (value == 0) { gameObject.SetActive(false); }
+
+        //set number and layer
+        //bigger digit = higher layer
+        render.sprite = numbers[value];
+        render.sortingOrder = value;
+
+        //remove these
         transform.position = Vector2.zero;
 
-        //bounce up to give player time to catch
-        if (!followMouse) rb.AddForce(new Vector2 (Random.Range(-forceHz, forceHz + 1), forceVt));
-
-        rb.gravityScale = !followMouse ? 0.5f : 0;
+        //bounce up
+        rb.AddForce(new Vector2 (Random.Range(-forceHz, forceHz + 1), forceVt));
     }
 
     void Update()
@@ -40,29 +58,38 @@ public class Number : MonoBehaviour
         Debug.Log("Grab Change");
         followMouse = grab;
 
+        //movement
         rb.gravityScale = grab ? 0 : 0.5f;
-        rb.linearVelocityY = 0;
+        rb.linearVelocity = Vector2.zero;
+
+        //juice
+        trail.emitting = grab;
     }
 
     void Rotate()
     {
-        if (!followMouse) return;
-
-        float rotAmount = 0;
-
-        if (transform.position.x + 0.05f < Camera.main.ScreenToWorldPoint(Input.mousePosition).x)
+        if (!followMouse)
         {
-            rotAmount = maxRotation;
+            transform.eulerAngles = new Vector3(0, 0, Mathf.Clamp(rb.linearVelocityX * 20, -maxRotation, maxRotation));
         }
 
-        else if (transform.position.x - 0.05f > Camera.main.ScreenToWorldPoint(Input.mousePosition).x)
+        if (followMouse)
         {
-            rotAmount = -maxRotation;
-        }
+            float rotAmount = 0;
 
-        float rotate = Mathf.LerpAngle(transform.eulerAngles.z, rotAmount, rotationSmoothing * Time.deltaTime);
-        transform.eulerAngles = new Vector3(0, 0, rotate);
-        //transform.localEulerAngles = Vector3.Lerp(transform.localEulerAngles, new Vector3(0, 0, -20), rotationSmoothing * Time.deltaTime);
+            if (transform.position.x + 0.05f < Camera.main.ScreenToWorldPoint(Input.mousePosition).x)
+            {
+                rotAmount = maxRotation;
+            }
+
+            else if (transform.position.x - 0.05f > Camera.main.ScreenToWorldPoint(Input.mousePosition).x)
+            {
+                rotAmount = -maxRotation;
+            }
+
+            float rotate = Mathf.LerpAngle(transform.eulerAngles.z, rotAmount, rotationSmoothing * Time.deltaTime);
+            transform.eulerAngles = new Vector3(0, 0, rotate);
+        }
     }
 
     private void OnMouseDown()
