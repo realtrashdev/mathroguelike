@@ -9,6 +9,9 @@ public class Number : MonoBehaviour
     [Header("Movement")]
     [SerializeField] int forceHz;
     [SerializeField] int forceVt;
+    [SerializeField] float followSpeed;
+    [SerializeField] float maxRotation = 0;
+    [SerializeField] float rotationSmoothing;
     [SerializeField] float rotationMultiplier;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -32,7 +35,7 @@ public class Number : MonoBehaviour
     void Update()
     {
         Rotate();
-        if (followMouse) { transform.position = Vector2.MoveTowards(transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition), 1); }
+        if (followMouse) { transform.position = Vector2.MoveTowards(transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition), followSpeed); }
     }
 
     public void Grabbed()
@@ -42,8 +45,18 @@ public class Number : MonoBehaviour
 
     void Rotate()
     {
-        float rotAmount = rb.linearVelocity.x * rotationMultiplier;
+        float rotAmount = 0;
 
-        transform.eulerAngles = new Vector3(0, 0, rotAmount);
+        if (transform.position.x + 0.05f < Camera.main.ScreenToWorldPoint(Input.mousePosition).x)
+        {
+            rotAmount = maxRotation;
+        }
+
+        else if (transform.position.x - 0.05f > Camera.main.ScreenToWorldPoint(Input.mousePosition).x)
+        {
+            rotAmount = -maxRotation;
+        }
+
+        transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, 0, rotAmount), rotationSmoothing * Time.deltaTime);
     }
 }
