@@ -33,8 +33,10 @@ public class NumberManager : MonoBehaviour
         
     }
 
-    public void SpawnNumber(NumberInfo info)
+    public void SpawnNumber(NumberInfoEvent infoEvent)
     {
+        NumberInfo info = infoEvent.Info;
+
         for (int i = 0; i < numbers.Count; i++)
         {
             if (!numbers[i].activeSelf)
