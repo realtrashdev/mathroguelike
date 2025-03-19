@@ -63,12 +63,6 @@ public class Number : MonoBehaviour
     {
         Rotate();
 
-        if (followMouse)
-        { 
-            if (!canGrab) GrabChange(false);
-            transform.position = Vector2.MoveTowards(transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition), followSpeed);
-        }
-
         if (rb.linearVelocityY < 0 && rb.gravityScale < gravity * 2)
         {
             rb.gravityScale = gravity * 2;
@@ -76,6 +70,15 @@ public class Number : MonoBehaviour
 
         //if off screen, disable
         if (transform.position.y < -15) { gameObject.SetActive(false); }
+    }
+
+    private void FixedUpdate()
+    {
+        if (followMouse)
+        {
+            if (!canGrab) GrabChange(false);
+            transform.position = Vector2.MoveTowards(transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition), followSpeed);
+        }
     }
 
     public void GrabChange(bool grab)

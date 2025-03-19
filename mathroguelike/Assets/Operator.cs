@@ -15,6 +15,12 @@ public class Operator : MonoBehaviour
     SpriteRenderer render;
     [SerializeField] Sprite[] operatorSprites;
 
+    private void Start()
+    {
+        render = GetComponentInChildren<SpriteRenderer>();
+        UpdateOperator(type);
+    }
+
     public void UpdateOperator(OperatorType newType)
     {
         type = newType;

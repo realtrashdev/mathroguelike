@@ -1,14 +1,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct NumberInfo
+{
+    public Vector2 position;
+    public int value;
+
+    public NumberInfo(Vector2 position, int value)
+    {
+        this.position = position;
+        this.value = value;
+    }
+}
+
 public class NumberManager : MonoBehaviour
 {
-    public struct NumberInfo
-    {
-        public Vector2 position;
-        public int value;
-    }
-
     [SerializeField] private List<GameObject> numbers = new List<GameObject>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -41,7 +48,7 @@ public class NumberManager : MonoBehaviour
         }
     }
 
-    public void SpawnNumber()
+    /*public void SpawnNumber()
     {
         for (int i = 0; i < numbers.Count; i++)
         {
@@ -51,5 +58,5 @@ public class NumberManager : MonoBehaviour
                 break;
             }
         }
-    }
+    }*/
 }

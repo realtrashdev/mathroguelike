@@ -556,8 +556,8 @@ Transform:
   m_Children:
   - {fileID: 1304555285}
   - {fileID: 1539282446}
-  - {fileID: 869226138}
   - {fileID: 1735248430803629746}
+  - {fileID: 869226138}
   m_Father: {fileID: 1477447353}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &471345635
@@ -1482,6 +1482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 565dc2629c925334db534a1f52671e6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numberChannel: {fileID: 11400000, guid: 63ef103f6b66cf94996a3454af3d0dcc, type: 2}
 --- !u!1001 &1178202180
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2853,6 +2854,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 471345634}
     m_Modifications:
+    - target: {fileID: 910326766672406925, guid: d19e4ca2061026b4da878237036e1987, type: 3}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1300981463668138990, guid: d19e4ca2061026b4da878237036e1987, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.25
