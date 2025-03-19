@@ -1,28 +1,34 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using DG.Tweening;
+using System.Collections;
 
 public class Number : MonoBehaviour
 {
-    SpriteRenderer render;
+    [HideInInspector] public SpriteRenderer render;
     Rigidbody2D rb;
     TrailRenderer trail;
 
     public int value;
+    bool canGrab;
 
     [Header("Rendering")]
     [SerializeField] Sprite[] numbers;
 
-    [Header("Movement")]
+    [Header("Grabbing")]
     [SerializeField] bool followMouse;
-    [SerializeField] int forceHz;
-    [SerializeField] int forceVt;
     [SerializeField] float followSpeed;
     [SerializeField] float maxRotation = 0;
     [SerializeField] float rotationSmoothing;
 
+    [Header("Spawning")]
+    [SerializeField] int forceHz;
+    [SerializeField] int forceVt;
+    [SerializeField] float gravity;
+
     void Awake()
     {
-        render = GetComponent<SpriteRenderer>();
+        render = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         trail = GetComponent<TrailRenderer>();
         gameObject.SetActive(false);
@@ -30,18 +36,24 @@ public class Number : MonoBehaviour
 
     void OnEnable()
     {
+        canGrab = false;
+        StartCoroutine(SpawnTimer());
         GrabChange(false);
-
-        //if 0, disable
-        if (value == 0) { gameObject.SetActive(false); }
-
-        //set number and layer
-        //bigger digit = higher layer
-        render.sprite = numbers[value];
-        render.sortingOrder = value;
 
         //remove these
         transform.position = Vector2.zero;
+        value = Random.Range(0, 10);
+
+        //gravity
+        rb.gravityScale = gravity;
+
+        //visuals
+        render.sprite = numbers[value];
+        render.sortingOrder = value;
+
+        //scaling
+        transform.localScale = Vector3.zero;
+        transform.DOScale(1, 0.33f).SetEase(Ease.OutQuint);
 
         //bounce up
         rb.AddForce(new Vector2 (Random.Range(-forceHz, forceHz + 1), forceVt));
@@ -53,11 +65,17 @@ public class Number : MonoBehaviour
 
         if (followMouse)
         { 
+            if (!canGrab) GrabChange(false);
             transform.position = Vector2.MoveTowards(transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition), followSpeed);
         }
 
+        if (rb.linearVelocityY < 0 && rb.gravityScale < gravity * 2)
+        {
+            rb.gravityScale = gravity * 2;
+        }
+
         //if off screen, disable
-        if (transform.position.y < -10) { gameObject.SetActive(false); }
+        if (transform.position.y < -15) { gameObject.SetActive(false); }
     }
 
     public void GrabChange(bool grab)
@@ -66,11 +84,21 @@ public class Number : MonoBehaviour
         followMouse = grab;
 
         //movement
-        rb.gravityScale = grab ? 0 : 0.5f;
+        rb.gravityScale = grab ? 0 : gravity * 4;
         rb.linearVelocity = Vector2.zero;
 
         //juice
         trail.emitting = grab;
+
+        switch (grab)
+        {
+            case true:
+                render.transform.DOScale(1.5f, 0.1f);
+                break;
+            case false:
+                render.transform.DOScale(1f, 0.1f);
+                break;
+        }
     }
 
     void Rotate()
@@ -101,11 +129,33 @@ public class Number : MonoBehaviour
 
     private void OnMouseDown()
     {
-        GrabChange(true);
+        if (!followMouse)
+        {
+            GrabChange(true);
+        }
     }
 
     private void OnMouseUp()
     {
-        GrabChange(false);
+        if (followMouse)
+        {
+            GrabChange(false);
+        }
+    }
+
+    IEnumerator SpawnTimer()
+    {
+        yield return new WaitForSeconds(0.33f);
+        ToggleGrabbable(true);
+    }
+
+    void ToggleGrabbable(bool state)
+    {
+        canGrab = state;
+
+        if (followMouse && !canGrab)
+        {
+            GrabChange(false);
+        }
     }
 }

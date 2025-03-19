@@ -154,7 +154,7 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 2
-      y: 4
+      y: 34
       width: 16
       height: 16
     spriteID: 66bfcb5ad493ce349b6b62d5d50a2adb
@@ -175,7 +175,7 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 18
-      y: 4
+      y: 34
       width: 16
       height: 16
     spriteID: 86ffdbcfde7a7d145976b0c0671055fc
@@ -196,7 +196,7 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 34
-      y: 4
+      y: 34
       width: 16
       height: 16
     spriteID: c2f4ee9e3265c204794ddb434088704f
@@ -217,7 +217,7 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 50
-      y: 4
+      y: 34
       width: 16
       height: 16
     spriteID: c9fb000064f36034d91ba951aae3fdb8
@@ -238,7 +238,7 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 66
-      y: 4
+      y: 34
       width: 16
       height: 16
     spriteID: 8a7dff8401c92d84f9f2363680145561
@@ -259,7 +259,7 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 82
-      y: 4
+      y: 34
       width: 16
       height: 16
     spriteID: 812d258d7405c8f498fdb12d270b3c12
@@ -280,7 +280,7 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 98
-      y: 4
+      y: 34
       width: 16
       height: 16
     spriteID: 972b008fb9c3a7d41b12a0f1deaac114
@@ -301,7 +301,7 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 114
-      y: 4
+      y: 34
       width: 16
       height: 16
     spriteID: 5b4f1235ec62c7f408dbf9d28398edf3
@@ -322,7 +322,7 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 130
-      y: 4
+      y: 34
       width: 16
       height: 16
     spriteID: 26a6913c4b918294688d41ae84320183
@@ -343,10 +343,94 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 146
-      y: 4
+      y: 34
       width: 16
       height: 16
     spriteID: 2e51855de3727af42b0331110e029cbf
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  - name: operator_add
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 2
+      y: 2
+      width: 16
+      height: 16
+    spriteID: 3b74ec9ecf16aa24cb9af02d8c70136e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  - name: operator_sub
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 18
+      y: 2
+      width: 16
+      height: 16
+    spriteID: d0ab8c6c595bb9c428e724a0a2f9b2f4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  - name: operator_mult
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 34
+      y: 2
+      width: 16
+      height: 16
+    spriteID: d698f5969566d164ab6cff4382cdcafb
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  - name: operator_div
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 50
+      y: 2
+      width: 16
+      height: 16
+    spriteID: 0a3691e2cb262ad48b6ca25dd7034f7e
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -368,9 +452,9 @@ ScriptedImporter:
       additiveSortOrder: 0
       cellRect:
         x: 2
-        y: 200
+        y: 170
         width: 156
-        height: 16
+        height: 46
       spriteId: fe112fd9a5c1e3d40883e2f4cd5775c4
     linkedCells: []
     parentIndex: -1
@@ -451,4 +535,4 @@ ScriptedImporter:
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 384, y: 216}
-  previousTextureSize: {x: 256, y: 32}
+  previousTextureSize: {x: 256, y: 64}
